@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-unbounded);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-unbounded), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* Logos animation */
+@keyframes logo-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes logo-scroll-rev {
+  from { transform: translateX(0); }
+  to { transform: translateX(50%); }
+}
+.animate-logo-row {
+  animation: logo-scroll 18s linear infinite;
+}
+.animate-logo-row-rev {
+  animation: logo-scroll-rev 18s linear infinite;
+}
+/* Swipe animation for rotating headline */
+@keyframes swipe {
+  0% { opacity: 0; transform: translateX(-8px); }
+  5% { opacity: 1; transform: translateX(0); }
+  90% { opacity: 1; transform: translateX(0); }
+  95% { opacity: 0; transform: translateX(8px); }
+  100% { opacity: 0; transform: translateX(-8px); }
+}
+
+/* Underline fill synced with swipe visibility window */
+@keyframes swipe-underline {
+  0% { transform: scaleX(0); }
+  5% { transform: scaleX(0); }
+  90% { transform: scaleX(1); }
+  95% { transform: scaleX(0); }
+  100% { transform: scaleX(0); }
+}
+.swipe-underline {
+  position: relative;
+  display: inline-block;
+  --swipe-duration: 5s;
+}
+.swipe-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0; /* span full width */
+  bottom: -2px;
+  height: 2px;
+  background: #d1fa1a; /* lime underline */
+  transform-origin: left;
+  transform: scaleX(0);
+  opacity: 0.9;
+  animation: swipe-underline var(--swipe-duration) ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Global page container utilities for consistent widths/padding */
+.page {
+  max-width: 72rem; /* matches Tailwind max-w-6xl */
+  margin-left: auto;
+  margin-right: auto;
+}
+.page-pad {
+  padding-left: 1.5rem; /* px-6 */
+  padding-right: 1.5rem;
+}
+@media (min-width: 768px) {
+  .page-pad {
+    padding-left: 2.5rem; /* md:px-10 */
+    padding-right: 2.5rem;
+  }
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
